@@ -31,3 +31,8 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# Ignore all YAML and properties files anywhere
+*.yml
+*.yaml
+*.properties
