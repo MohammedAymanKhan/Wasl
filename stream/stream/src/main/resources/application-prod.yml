@@ -1,0 +1,55 @@
+app:
+  message: "This is the PROD message."
+
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8081/realms/Wasl?useSSL=true&requireSSL=true&serverTimezone=UTC
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/walsdb
+    username: root
+    password: root123
+    createDatabaseIfNotExist: true
+
+    hikari:
+      maximum-pool-size: 20
+      minimum-idle: 5
+      connection-timeout: 30000 # 30 seconds
+      idle-timeout: 600000 # 10 minutes
+      max-lifetime: 1800000 # 30 minutes
+      leak-detection-threshold: 2000 # 2 seconds (good for dev, might disable in prod)
+      pool-name: WaslHikariPool
+      data-source-properties:
+        trustServerCertificate: true
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+
+    flyway:
+      enabled: true # Enable Flyway
+      locations: classpath:db/migration # Default location for migration scripts
+      baseline-on-migrate: true # Important for existing databases
+      baseline-version: 1
+      clean-disabled: true
+      validate-on-migrate: true
+
+
+keycloak:
+  admin:
+    client-id: admin-cli  # Separate admin client
+    client-secret: cXshahPtEeXQfVHjUpJtb2XbwdMN2jXX
+    server-url: http://localhost:8081
+    realm: Wasl  # For admin operations
+
+Stream:
+  secret-key: 7sekgqgyy2caykep8nwf4fstzjmk4ttst3h9byzgg3w4uwmmgdwxkrqmcdhk6sxj
+
+
